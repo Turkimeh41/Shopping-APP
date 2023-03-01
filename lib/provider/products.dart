@@ -38,19 +38,22 @@ class Products with ChangeNotifier {
   Future<void> fetchProductsAndSET() async {
     try {
       final response = await http.get(urlProducts);
-      final extracted = json.decode(response.body) as Map<String, dynamic>;
+      final extracted = json.decode(response.body);
       final List<Product> loadedProducts = [];
-      extracted.forEach((pID, value) {
-        loadedProducts.add(Product(
-            id: pID,
-            title: value['title'],
-            description: value['description'],
-            imageURL: value['imageUrl'],
-            price: value['price'],
-            isFavourite: value['isfavorite']));
-        _products = loadedProducts;
-        notifyListeners();
-      });
+      if (extracted == Map<String, dynamic>) {
+        extracted as Map<String, dynamic>;
+        extracted.forEach((pID, value) {
+          loadedProducts.add(Product(
+              id: pID,
+              title: value['title'],
+              description: value['description'],
+              imageURL: value['imageUrl'],
+              price: value['price'],
+              isFavourite: value['isfavorite']));
+        });
+      }
+      _products = loadedProducts;
+      notifyListeners();
     } catch (error) {
       throw (error);
     }
