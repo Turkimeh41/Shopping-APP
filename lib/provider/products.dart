@@ -31,7 +31,7 @@ class Products with ChangeNotifier {
           isFavourite: favorite));
       notifyListeners();
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -55,7 +55,7 @@ class Products with ChangeNotifier {
       _products = loadedProducts;
       notifyListeners();
     } catch (error) {
-      throw (error);
+      rethrow;
     }
   }
 
@@ -69,12 +69,11 @@ class Products with ChangeNotifier {
     final urlProduct = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/products/$id.json');
     for (int i = 0; i < _products.length; i++) {
       if (id == _products[i].id) {
-        final product = _products[i];
         try {
           await http.delete(urlProduct);
           _products.removeAt(i);
         } catch (error) {
-          throw error;
+          rethrow;
         }
       }
     }

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, unused_local_variable
 import 'dart:async';
 
 import 'package:module8/main.dart';
@@ -44,10 +44,9 @@ class _ProductScreenState extends State<ProductScreen> {
         MyApp.started = !MyApp.started;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: RichText(
-          text: TextSpan(style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), children: [
-            TextSpan(text: 'Refreshed', style: TextStyle(color: Theme.of(context).primaryColor)),
-            TextSpan(text: ' !')
-          ]),
+          text: TextSpan(
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              children: [TextSpan(text: 'Refreshed', style: TextStyle(color: Theme.of(context).primaryColor)), TextSpan(text: ' !')]),
         )));
       });
     });

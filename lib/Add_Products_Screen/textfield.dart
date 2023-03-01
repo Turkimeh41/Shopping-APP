@@ -31,10 +31,8 @@ class UserTextField extends StatelessWidget {
         style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
         decoration: InputDecoration(
             iconColor: const Color.fromARGB(255, 255, 188, 3),
-            focusedBorder:
-                const UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
-            enabledBorder:
-                const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
+            focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
+            enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
             labelText: property,
             labelStyle: const TextStyle(
               fontSize: 16,

@@ -7,14 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 
 class AddEditUserProducts extends StatefulWidget {
-  const AddEditUserProducts(
-      {this.id = '',
-      this.title = '',
-      this.price = 0,
-      this.description = '',
-      this.imageURL = '',
-      required this.provider,
-      super.key});
+  const AddEditUserProducts({this.id = '', this.title = '', this.price = 0, this.description = '', this.imageURL = '', required this.provider, super.key});
   final String id;
   final String title;
   final double price;
@@ -112,8 +105,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
     return Container(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          color: Theme.of(context).backgroundColor, borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       child: (loadingAnim == 1)
@@ -138,8 +130,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
               ? Stack(
                   alignment: Alignment.center,
                   children: [
-                    Lottie.asset('animations/50465-done.json',
-                        width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5)
+                    Lottie.asset('animations/50465-done.json', width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5)
                   ],
                 )
               : Form(
@@ -158,17 +149,13 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                   formid = value!;
                                 }),
                                 textInputAction: TextInputAction.next,
-                                initialValue: widget.provider == 1
-                                    ? (Provider.of<Products>(context).products.length + 1).toString()
-                                    : widget.id,
+                                initialValue: widget.provider == 1 ? (Provider.of<Products>(context).products.length + 1).toString() : widget.id,
                                 cursorColor: const Color.fromARGB(255, 255, 188, 3),
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
+                                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
+                                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
                                     labelText: 'ID:',
                                     labelStyle: TextStyle(
                                       fontSize: 16,
@@ -193,10 +180,8 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
+                                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
+                                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
                                     labelText: 'Title:',
                                     labelStyle: TextStyle(
                                       fontSize: 16,
@@ -222,10 +207,8 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
+                                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
+                                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
                                     labelText: 'Price:',
                                     labelStyle: TextStyle(
                                       fontSize: 16,
@@ -251,10 +234,8 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
+                                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
+                                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
                                     labelText: 'Description:',
                                     labelStyle: TextStyle(
                                       fontSize: 16,
@@ -283,10 +264,8 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
+                                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(width: 5.5, color: Color.fromARGB(255, 255, 188, 3))),
+                                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 104, 101, 101), width: 2.5)),
                                     labelText: 'ImageURL:',
                                     labelStyle: TextStyle(
                                       fontSize: 16,
@@ -295,8 +274,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                               )),
                           Container(
                             margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                border: Border.all(width: 1, color: Colors.black), borderRadius: BorderRadius.circular(15)),
+                            decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.black), borderRadius: BorderRadius.circular(15)),
                             width: 128,
                             height: 128,
                             child: ClipRRect(
@@ -332,8 +310,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                             margin: const EdgeInsets.only(top: 0),
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                  shape:
-                                      MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
                                   elevation: MaterialStateProperty.all(3),
                                 ),
                                 onPressed: (() {

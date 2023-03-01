@@ -93,8 +93,7 @@ class CartWidget extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 85),
                 child: Text(
                   '\$${cartitem.price} x${cartitem.quantity}',
-                  style: TextStyle(
-                      fontSize: 10, fontWeight: FontWeight.bold, color: cartitem.quantity == 1 ? Colors.white : Colors.grey),
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: cartitem.quantity == 1 ? Colors.white : Colors.grey),
                 ),
               ),
               Container(

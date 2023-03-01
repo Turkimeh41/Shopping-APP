@@ -16,8 +16,7 @@ class ProductDisplay extends StatelessWidget {
       margin: const EdgeInsets.all(15),
       color: Theme.of(context).backgroundColor,
       child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 1.4, crossAxisSpacing: 15, mainAxisSpacing: 15),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1.4, crossAxisSpacing: 15, mainAxisSpacing: 15),
         itemBuilder: (context, i) {
           return ChangeNotifierProvider.value(
             value: products[i],

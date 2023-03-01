@@ -59,8 +59,7 @@ class _OrderWidgetState extends State<OrderWidget> {
             )),
         if (_expanded)
           Container(
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(width: 1.5, color: Colors.black)),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(width: 1.5, color: Colors.black)),
             margin: const EdgeInsets.all(10),
             height: min(insOrder.products.length * 20.0 + 140.0, 256),
             child: ListView.builder(

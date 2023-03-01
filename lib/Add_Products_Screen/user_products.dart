@@ -26,8 +26,7 @@ class UserProductScreen extends StatelessWidget {
                       color: Colors.white,
                       onPressed: () {
                         showModalBottomSheet(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                           isScrollControlled: true,
                           context: context,
                           builder: (context) {
