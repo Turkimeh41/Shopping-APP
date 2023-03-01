@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -66,15 +67,17 @@ class Products with ChangeNotifier {
               'isfavorite': favorite
             }))
         .then((response) {
-      _products.add(Product(
-          id: json.decode(response.body)['name'],
-          title: title,
-          description: description,
-          imageURL: imageURL,
-          price: price,
-          isFavourite: favorite));
-      notifyListeners();
-    }).catchError((error) {});
+      Timer(Duration(seconds: 10), () {
+        _products.add(Product(
+            id: json.decode(response.body)['name'],
+            title: title,
+            description: description,
+            imageURL: imageURL,
+            price: price,
+            isFavourite: favorite));
+        notifyListeners();
+      });
+    });
   }
 
   Product findByID(String id) {

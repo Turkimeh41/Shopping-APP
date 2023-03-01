@@ -379,10 +379,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                               imageURL: formurl,
                                               price: formprice)
                                           .then((_) {
-                                        setState(() {
-                                          timer(context);
-                                          loadingAnim == 2;
-                                        });
+                                        Navigator.of(context).pop();
                                       });
                                     } else {
                                       final insProduct = Provider.of<Product>(
