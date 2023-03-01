@@ -119,8 +119,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                     ? (Provider.of<Products>(context).products.length + 1).toString()
                                     : widget.id,
                                 cursorColor: const Color.fromARGB(255, 255, 188, 3),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
                                     focusedBorder: UnderlineInputBorder(
@@ -148,8 +147,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 textInputAction: TextInputAction.next,
                                 initialValue: widget.title,
                                 cursorColor: const Color.fromARGB(255, 255, 188, 3),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
                                     focusedBorder: UnderlineInputBorder(
@@ -178,8 +176,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 textInputAction: TextInputAction.next,
                                 initialValue: widget.price > 0 ? widget.price.toString() : '',
                                 cursorColor: const Color.fromARGB(255, 255, 188, 3),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
                                     focusedBorder: UnderlineInputBorder(
@@ -207,8 +204,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 textInputAction: TextInputAction.next,
                                 initialValue: widget.description,
                                 cursorColor: const Color.fromARGB(255, 255, 188, 3),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
                                     focusedBorder: UnderlineInputBorder(
@@ -239,8 +235,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 maxLines: 3,
                                 textInputAction: TextInputAction.done,
                                 cursorColor: const Color.fromARGB(255, 255, 188, 3),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 46, 41, 41)),
                                 decoration: const InputDecoration(
                                     iconColor: Color.fromARGB(255, 255, 188, 3),
                                     focusedBorder: UnderlineInputBorder(
@@ -256,8 +251,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                           Container(
                             margin: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                border: Border.all(width: 1, color: Colors.black),
-                                borderRadius: BorderRadius.circular(15)),
+                                border: Border.all(width: 1, color: Colors.black), borderRadius: BorderRadius.circular(15)),
                             width: 128,
                             height: 128,
                             child: ClipRRect(
@@ -293,25 +287,23 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                             margin: const EdgeInsets.only(top: 0),
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                                  shape:
+                                      MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
                                   elevation: MaterialStateProperty.all(3),
                                 ),
-                                onPressed: (() {
+                                onPressed: (() async {
                                   setState(() {
                                     loadingAnim == 2;
                                   });
                                   if (submitForm() == true) {
                                     if (widget.provider == 1) {
                                       final insProducts = Provider.of<Products>(context, listen: false);
-                                      insProducts
-                                          .addProduct(
-                                              title: formtitle,
-                                              description: formdescription,
-                                              imageURL: formurl,
-                                              price: formprice)
-                                          .catchError((error) {
-                                        return showDialog(
+
+                                      try {
+                                        await insProducts.addProduct(
+                                            title: formtitle, description: formdescription, imageURL: formurl, price: formprice);
+                                      } catch (error) {
+                                        showDialog(
                                           context: context,
                                           builder: (ctx) {
                                             return AlertDialog(
@@ -320,23 +312,19 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                                 TextButton(
                                                     onPressed: () {
                                                       Navigator.of(ctx).pop();
-                                                      Navigator.of(context).pop();
                                                     },
                                                     child: Text('Okay.'))
                                               ],
                                             );
                                           },
                                         );
-                                      }).then((_) {
-                                        setState(() {
-                                          loadingAnim == 0;
-                                        });
+                                      } finally {
                                         Navigator.of(context).pop();
-                                      });
-                                    } else {
-                                      final insProduct = Provider.of<Product>(context, listen: false);
-                                      insProduct.editProduct(formtitle, formdescription, formurl, formprice);
+                                      }
                                     }
+                                  } else {
+                                    final insProduct = Provider.of<Product>(context, listen: false);
+                                    insProduct.editProduct(formtitle, formdescription, formurl, formprice);
                                   }
                                 }),
                                 child: const Icon(

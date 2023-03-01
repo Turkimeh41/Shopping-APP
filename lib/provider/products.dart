@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'product.dart';
@@ -47,18 +48,22 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct({required title, required description, required imageURL, required price, favorite = false}) async {
     final url = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/products');
-    final response = await http.post(url,
-        body: json
-            .encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite}));
-
-    _products.add(Product(
-        id: json.decode(response.body)['name'],
-        title: title,
-        description: description,
-        imageURL: imageURL,
-        price: price,
-        isFavourite: favorite));
-    notifyListeners();
+    try {
+      final response = await http.post(url,
+          body: json.encode(
+              {'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite}));
+      _products.add(Product(
+          id: json.decode(response.body)['name'],
+          title: title,
+          description: description,
+          imageURL: imageURL,
+          price: price,
+          isFavourite: favorite));
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
   Product findByID(String id) {
