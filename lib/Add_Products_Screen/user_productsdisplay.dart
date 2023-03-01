@@ -39,7 +39,7 @@ class UserProductDisplay extends StatelessWidget {
                   fontSize: 16,
                 )),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.1,
+              width: MediaQuery.of(context).size.width * 0.115,
             ),
             const Text(
               'Price',
