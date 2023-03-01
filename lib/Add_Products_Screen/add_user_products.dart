@@ -364,10 +364,10 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                   elevation: MaterialStateProperty.all(3),
                                 ),
                                 onPressed: (() {
+                                  setState(() {
+                                    loadingAnim == 2;
+                                  });
                                   if (submitForm() == true) {
-                                    setState(() {
-                                      loadingAnim = 1;
-                                    });
                                     if (widget.provider == 1) {
                                       final insProducts = Provider.of<Products>(
                                           context,
@@ -378,7 +378,28 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                               description: formdescription,
                                               imageURL: formurl,
                                               price: formprice)
-                                          .then((_) {
+                                          .catchError((error) {
+                                        return showDialog(
+                                          context: context,
+                                          builder: (ctx) {
+                                            return AlertDialog(
+                                              title: Text('an ERROR occured'),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(ctx).pop();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text('Okay.'))
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }).then((_) {
+                                        setState(() {
+                                          loadingAnim == 0;
+                                        });
                                         Navigator.of(context).pop();
                                       });
                                     } else {
