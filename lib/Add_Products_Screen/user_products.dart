@@ -16,11 +16,8 @@ class UserProductScreen extends StatelessWidget {
           preferredSize: const Size.fromHeight(55),
           child: Container(
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5)),
-                  gradient: LinearGradient(
-                      colors: [Colors.redAccent, Colors.orange, Colors.amber])),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5)),
+                  gradient: LinearGradient(colors: [Colors.redAccent, Colors.orange, Colors.amber])),
               child: SafeArea(
                   child: Center(
                 child: ListTile(
@@ -30,9 +27,7 @@ class UserProductScreen extends StatelessWidget {
                       onPressed: () {
                         showModalBottomSheet(
                           shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30))),
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                           isScrollControlled: true,
                           context: context,
                           builder: (context) {
@@ -46,8 +41,7 @@ class UserProductScreen extends StatelessWidget {
                       },
                     ),
                     leading: IconButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushReplacementNamed('/'),
+                        onPressed: () => Navigator.of(context).pushReplacementNamed('/'),
                         icon: Transform.scale(
                           scaleX: -1,
                           child: const Icon(
@@ -58,15 +52,10 @@ class UserProductScreen extends StatelessWidget {
                         )),
                     title: const Text(
                       'User\'s Added Products',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                     )),
               ))),
         ),
-        body: Container(
-            color: Theme.of(context).backgroundColor,
-            child: const UserProductDisplay()));
+        body: Container(color: Theme.of(context).backgroundColor, child: const UserProductDisplay()));
   }
 }

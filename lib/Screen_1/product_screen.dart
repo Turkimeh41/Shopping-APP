@@ -73,8 +73,6 @@ class _ProductScreenState extends State<ProductScreen> {
           centerTitle: true,
         ),
         drawer: AppDrawer(),
-        body: Container(
-            color: Theme.of(context).backgroundColor,
-            child: ProductDisplay(_showFav)));
+        body: Container(color: Theme.of(context).backgroundColor, child: ProductDisplay(_showFav)));
   }
 }

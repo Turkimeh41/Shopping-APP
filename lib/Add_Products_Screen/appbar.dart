@@ -9,17 +9,13 @@ class UserAppBar extends StatelessWidget {
       preferredSize: const Size.fromHeight(55),
       child: Container(
           decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5)),
-              gradient: LinearGradient(
-                  colors: [Colors.redAccent, Colors.orange, Colors.amber])),
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5)),
+              gradient: LinearGradient(colors: [Colors.redAccent, Colors.orange, Colors.amber])),
           child: SafeArea(
               child: Center(
             child: ListTile(
                 leading: IconButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushReplacementNamed('/'),
+                    onPressed: () => Navigator.of(context).pushReplacementNamed('/'),
                     icon: Transform.scale(
                       scaleX: -1,
                       child: const Icon(
@@ -30,10 +26,7 @@ class UserAppBar extends StatelessWidget {
                     )),
                 title: const Text(
                   'User\'s Orders',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                 )),
           ))),
     );

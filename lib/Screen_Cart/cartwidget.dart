@@ -10,8 +10,7 @@ class CartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartitem = Provider.of<CartItem>(context);
-    final product =
-        Provider.of<Products>(context, listen: false).findByID(cartitem.pId);
+    final product = Provider.of<Products>(context, listen: false).findByID(cartitem.pId);
 
     return Dismissible(
       confirmDismiss: (direction) {
@@ -20,16 +19,13 @@ class CartWidget extends StatelessWidget {
           builder: (ctx) {
             return AlertDialog(
               title: const Text('Are you sure'),
-              content:
-                  const Text('Do you want to remove the item from the cart'),
+              content: const Text('Do you want to remove the item from the cart'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(true),
                   child: const Text("Yes"),
                 ),
-                TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(false),
-                    child: const Text('No'))
+                TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('No'))
               ],
             );
           },
@@ -79,8 +75,7 @@ class CartWidget extends StatelessWidget {
                     children: [
                       Text(
                         cartitem.title,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         width: 110,
@@ -99,18 +94,14 @@ class CartWidget extends StatelessWidget {
                 child: Text(
                   '\$${cartitem.price} x${cartitem.quantity}',
                   style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color:
-                          cartitem.quantity == 1 ? Colors.white : Colors.grey),
+                      fontSize: 10, fontWeight: FontWeight.bold, color: cartitem.quantity == 1 ? Colors.white : Colors.grey),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 70, left: 12),
                 child: Text(
                   '\$${(cartitem.price * cartitem.quantity).toStringAsFixed(2)}',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               )
             ],

@@ -6,11 +6,7 @@ class OrderItem with ChangeNotifier {
   final double amount;
   final List<CartItem> products;
   final DateTime time;
-  OrderItem(
-      {required this.id,
-      required this.amount,
-      required this.products,
-      required this.time});
+  OrderItem({required this.id, required this.amount, required this.products, required this.time});
 }
 
 class Orders with ChangeNotifier {
@@ -21,13 +17,7 @@ class Orders with ChangeNotifier {
   }
 
   void addOrder(double amount, List<CartItem> products) {
-    _orders.insert(
-        0,
-        OrderItem(
-            id: iD(),
-            amount: amount,
-            products: products,
-            time: DateTime.now()));
+    _orders.insert(0, OrderItem(id: iD(), amount: amount, products: products, time: DateTime.now()));
     notifyListeners();
   }
 

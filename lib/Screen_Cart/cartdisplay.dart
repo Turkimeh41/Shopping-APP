@@ -65,8 +65,7 @@ class CartDisplay extends StatelessWidget {
                         children: [
                           Text(
                             "Total",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             width: 50,
@@ -85,17 +84,13 @@ class CartDisplay extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   final insOrders = Provider.of<Orders>(context, listen: false);
-                  insOrders.addOrder(
-                      double.parse(cart.totalCart.toStringAsFixed(2)),
-                      cart.carts);
+                  insOrders.addOrder(double.parse(cart.totalCart.toStringAsFixed(2)), cart.carts);
                   cart.clearCart();
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.purple),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            side: BorderSide(color: Colors.purple)))),
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: Colors.purple)))),
                 child: Text("FINALIZE YOUR ORDER "),
               )
             ],

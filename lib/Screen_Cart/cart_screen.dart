@@ -13,10 +13,7 @@ class CartScreen extends StatelessWidget {
           centerTitle: true,
           title: const Text(
             "MY CART",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Color.fromARGB(255, 0, 0, 0)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
           )),
       body: const CartDisplay(),
     );

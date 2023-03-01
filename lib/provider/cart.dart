@@ -7,12 +7,7 @@ class CartItem with ChangeNotifier {
   final double price;
   final String pId;
 
-  CartItem(
-      {required this.price,
-      required this.id,
-      required this.title,
-      required this.quantity,
-      required this.pId});
+  CartItem({required this.price, required this.id, required this.title, required this.quantity, required this.pId});
 }
 
 class Cart with ChangeNotifier {
@@ -29,12 +24,7 @@ class Cart with ChangeNotifier {
         return;
       }
     }
-    _carts.add(CartItem(
-        price: price,
-        id: DateTime.now().toString(),
-        title: title,
-        quantity: 1,
-        pId: productID));
+    _carts.add(CartItem(price: price, id: DateTime.now().toString(), title: title, quantity: 1, pId: productID));
     notifyListeners();
   }
 

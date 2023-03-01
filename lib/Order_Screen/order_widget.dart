@@ -51,9 +51,7 @@ class _OrderWidgetState extends State<OrderWidget> {
                       });
                     },
                     icon: Icon(
-                      _expanded
-                          ? Icons.arrow_drop_down
-                          : Icons.expand_less_rounded,
+                      _expanded ? Icons.arrow_drop_down : Icons.expand_less_rounded,
                       color: Colors.black87,
                       size: 25,
                     ))
@@ -61,39 +59,34 @@ class _OrderWidgetState extends State<OrderWidget> {
             )),
         if (_expanded)
           Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(width: 1.5, color: Colors.black)),
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(width: 1.5, color: Colors.black)),
             margin: const EdgeInsets.all(10),
             height: min(insOrder.products.length * 20.0 + 140.0, 256),
             child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image.network(
-                          product
-                              .findByID(insOrder.products[index].pId)
-                              .imageURL,
-                          fit: BoxFit.cover,
-                          height: 64,
-                          width: 64,
-                        ),
-                        Text(
-                          insOrder.products[index].title,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text('${insOrder.products[index].quantity}'),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          '\$${(insOrder.products[index].price * insOrder.products[index].quantity).toStringAsFixed(2)}',
-                          style: const TextStyle(fontSize: 16),
-                        )
-                      ]);
+                  return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                    Image.network(
+                      product.findByID(insOrder.products[index].pId).imageURL,
+                      fit: BoxFit.cover,
+                      height: 64,
+                      width: 64,
+                    ),
+                    Text(
+                      insOrder.products[index].title,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text('${insOrder.products[index].quantity}'),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      '\$${(insOrder.products[index].price * insOrder.products[index].quantity).toStringAsFixed(2)}',
+                      style: const TextStyle(fontSize: 16),
+                    )
+                  ]);
                 },
                 itemCount: insOrder.products.length),
           )

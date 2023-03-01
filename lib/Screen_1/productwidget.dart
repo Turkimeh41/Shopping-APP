@@ -20,8 +20,7 @@ class ProductWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context)
-                .pushNamed(ProductDetailScreen.routeName, arguments: product);
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: product);
           },
           child: GridTile(
               child: Stack(
@@ -35,11 +34,7 @@ class ProductWidget extends StatelessWidget {
                   top: -7,
                   right: -7,
                   child: IconButton(
-                    icon: Icon(
-                        product.isFavourite
-                            ? Icons.favorite
-                            : Icons.favorite_border_rounded,
-                        size: 30),
+                    icon: Icon(product.isFavourite ? Icons.favorite : Icons.favorite_border_rounded, size: 30),
                     color: product.isFavourite ? Colors.red : Colors.black,
                     onPressed: () {
                       product.toggleFavorite();
@@ -67,8 +62,7 @@ class ProductWidget extends StatelessWidget {
                 bottom: -6,
                 right: -8,
                 child: IconButton(
-                  icon: const Icon(Icons.shopping_cart,
-                      color: Color.fromARGB(255, 89, 194, 48)),
+                  icon: const Icon(Icons.shopping_cart, color: Color.fromARGB(255, 89, 194, 48)),
                   onPressed: () {
                     cart.addToCart(product.id, product.price, product.title);
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();

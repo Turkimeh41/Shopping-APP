@@ -16,8 +16,7 @@ class Product with ChangeNotifier {
       required this.price,
       this.isFavourite = false});
 
-  void editProduct(
-      String title, String description, String imageURL, double price) {
+  void editProduct(String title, String description, String imageURL, double price) {
     this.title = title;
     this.description = description;
     this.imageURL = imageURL;

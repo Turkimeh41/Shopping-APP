@@ -20,8 +20,7 @@ class _OrderDisplayState extends State<OrderDisplay> {
       child: ListView.builder(
         itemCount: insOrders.getOrders.length,
         itemBuilder: (context, index) {
-          return ChangeNotifierProvider.value(
-              value: insOrders.getOrders[index], child: const OrderWidget());
+          return ChangeNotifierProvider.value(value: insOrders.getOrders[index], child: const OrderWidget());
         },
       ),
     );
