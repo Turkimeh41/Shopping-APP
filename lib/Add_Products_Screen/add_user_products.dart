@@ -89,7 +89,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
           ? Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Lottie.asset('animations/676-done.json',
+                Lottie.asset('animations/95147-rocket.json',
                     width: MediaQuery.of(context).size.width * 0.5,
                     height: MediaQuery.of(context).size.height * 0.5),
                 const Text(
@@ -101,12 +101,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
           : (loadingAnim == 2)
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircularProgressIndicator()
-                    //Lottie.asset('animations/95147-rocket.json',
-                    //width: MediaQuery.of(context).size.width * 0.5,
-                    // height: MediaQuery.of(context).size.height * 0.5),
-                  ],
+                  children: [Lottie.asset('animations/676-done.json')],
                 )
               : Form(
                   key: form,
