@@ -31,7 +31,6 @@ class Products with ChangeNotifier {
           isFavourite: favorite));
       notifyListeners();
     } catch (error) {
-      print(error);
       throw error;
     }
   }
@@ -63,9 +62,18 @@ class Products with ChangeNotifier {
     });
   }
 
-  void removeProduct(String id) {
+  Future<void> removeProduct(String id) async {
+    final urlProduct = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/products/$id.json');
     for (int i = 0; i < _products.length; i++) {
-      if (id == _products[i].id) _products.removeAt(i);
+      if (id == _products[i].id) {
+        final product = _products[i];
+        try {
+          await http.delete(urlProduct);
+          _products.removeAt(i);
+        } catch (error) {
+          throw error;
+        }
+      }
     }
     notifyListeners();
   }

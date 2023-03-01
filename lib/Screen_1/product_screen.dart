@@ -42,6 +42,13 @@ class _ProductScreenState extends State<ProductScreen> {
     Timer(Duration(seconds: 1), () {
       setState(() {
         MyApp.started = !MyApp.started;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: RichText(
+          text: TextSpan(style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), children: [
+            TextSpan(text: 'Refreshed', style: TextStyle(color: Theme.of(context).primaryColor)),
+            TextSpan(text: ' !')
+          ]),
+        )));
       });
     });
   }
