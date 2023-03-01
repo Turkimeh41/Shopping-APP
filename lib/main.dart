@@ -15,7 +15,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  static bool started = true;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

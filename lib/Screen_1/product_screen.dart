@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
+import 'dart:async';
 
+import 'package:module8/main.dart';
 import 'package:flutter/material.dart';
 import 'package:module8/Screen_1/badge.dart';
 import 'package:module8/Screen_1/app_drawer.dart';
@@ -7,6 +9,7 @@ import './productdisplay.dart';
 import 'package:provider/provider.dart';
 import '../provider/cart.dart';
 import '../Screen_Cart/cart_screen.dart';
+import '../provider/products.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -17,9 +20,30 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   bool _showFav = false;
+  @override
+  void didChangeDependencies() {
+    if (MyApp.started) {
+      Timer(Duration(seconds: 1), () {
+        final insProducts = Provider.of<Products>(context, listen: false);
+        insProducts.fetchProductsAndSET().then((_) {
+          setState(() {});
+        });
+        MyApp.started = !MyApp.started;
+      });
+    }
+    super.didChangeDependencies();
+  }
 
-  void selectCart(BuildContext context) {
-    Navigator.of(context).pushNamed(CartScreen.routeName);
+  Future<void> refresh(BuildContext context) async {
+    setState(() {
+      MyApp.started = !MyApp.started;
+    });
+    final insProducts = await Provider.of<Products>(context, listen: false).fetchProductsAndSET();
+    Timer(Duration(seconds: 1), () {
+      setState(() {
+        MyApp.started = !MyApp.started;
+      });
+    });
   }
 
   @override
@@ -38,7 +62,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   child: IconButton(
                     color: Theme.of(context).iconTheme.color,
                     icon: Icon(Icons.shopping_cart),
-                    onPressed: () => selectCart(context),
+                    onPressed: () => Navigator.of(context).pushNamed(CartScreen.routeName),
                   ),
                   value: cart.itemCount.toString(),
                   color: Colors.white),
@@ -73,6 +97,15 @@ class _ProductScreenState extends State<ProductScreen> {
           centerTitle: true,
         ),
         drawer: AppDrawer(),
-        body: Container(color: Theme.of(context).backgroundColor, child: ProductDisplay(_showFav)));
+        body: RefreshIndicator(
+          onRefresh: () => refresh(context),
+          child: Container(
+              color: Theme.of(context).backgroundColor,
+              child: MyApp.started
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ProductDisplay(_showFav)),
+        ));
   }
 }

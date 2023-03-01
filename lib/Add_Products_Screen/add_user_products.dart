@@ -49,28 +49,62 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
     super.dispose();
   }
 
-  bool submitForm() {
-    bool valid = form.currentState!.validate();
-    if (!valid) {
-      return false;
-    }
-    form.currentState!.save();
-    return true;
-  }
-
   bool isvalidURL(String url) {
     var urlPattern = r"(https?|ftp)://([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?";
     var result = RegExp(urlPattern, caseSensitive: false).hasMatch(url);
     return result;
   }
 
-  void timer(BuildContext context) {
-    Timer(
-      Duration(seconds: 10),
-      () {
+  Future<void> postForm() async {
+    bool valid = form.currentState!.validate();
+    if (!valid) {
+      return;
+    }
+    setState(() {
+      loadingAnim = 1;
+    });
+
+    form.currentState!.save();
+    try {
+      if (widget.provider == 1) {
+        final insProducts = Provider.of<Products>(context, listen: false);
+
+        await insProducts.addProduct(title: formtitle, description: formdescription, imageURL: formurl, price: formprice);
+        Timer(const Duration(seconds: 2), () {
+          setState(() {
+            loadingAnim = 2;
+          });
+        });
+      } else {
+        final insProduct = Provider.of<Product>(context, listen: false);
+        await insProduct.editProduct(formid, formtitle, formdescription, formurl, formprice);
+        Timer(const Duration(seconds: 2), () {
+          setState(() {
+            loadingAnim = 2;
+          });
+        });
+      }
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const Text('an ERROR occured'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: const Text('Okay.'))
+            ],
+          );
+        },
+      );
+    } finally {
+      Timer(const Duration(seconds: 3), (() {
         Navigator.of(context).pop();
-      },
-    );
+      }));
+    }
   }
 
   @override
@@ -83,21 +117,30 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       child: (loadingAnim == 1)
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          ? Stack(
+              alignment: Alignment.center,
               children: [
-                Lottie.asset('animations/95147-rocket.json',
-                    width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5),
-                const Text(
-                  'Loading...',
-                  style: TextStyle(fontSize: 16),
+                Positioned(
+                  bottom: MediaQuery.of(context).size.height * 0.12,
+                  child: Lottie.asset('animations/112180-paper-notebook.json',
+                      width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5),
+                ),
+                Positioned(
+                  bottom: MediaQuery.of(context).size.height * 0.2,
+                  child: Text(
+                    'Loading...',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey[800]),
+                  ),
                 )
               ],
             )
           : (loadingAnim == 2)
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Lottie.asset('animations/676-done.json')],
+              ? Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Lottie.asset('animations/50465-done.json',
+                        width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5)
+                  ],
                 )
               : Form(
                   key: form,
@@ -113,6 +156,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                 enabled: false,
                                 onSaved: ((value) {
                                   formid = value!;
+                                  print(formid);
                                 }),
                                 textInputAction: TextInputAction.next,
                                 initialValue: widget.provider == 1
@@ -196,6 +240,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                   if (value!.isEmpty) {
                                     return "Please fill in the Description";
                                   }
+                                  return null;
                                 },
                                 onSaved: (value) {
                                   formdescription = value!;
@@ -224,6 +269,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                   if (value!.isEmpty) {
                                     return "Please fill in the URL";
                                   }
+                                  return null;
                                 },
                                 onSaved: (value) {
                                   formurl = value!;
@@ -291,41 +337,10 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                                       MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
                                   elevation: MaterialStateProperty.all(3),
                                 ),
-                                onPressed: (() async {
+                                onPressed: (() {
                                   setState(() {
-                                    loadingAnim == 2;
+                                    postForm();
                                   });
-                                  if (submitForm() == true) {
-                                    if (widget.provider == 1) {
-                                      final insProducts = Provider.of<Products>(context, listen: false);
-
-                                      try {
-                                        await insProducts.addProduct(
-                                            title: formtitle, description: formdescription, imageURL: formurl, price: formprice);
-                                      } catch (error) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (ctx) {
-                                            return AlertDialog(
-                                              title: Text('an ERROR occured'),
-                                              actions: [
-                                                TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(ctx).pop();
-                                                    },
-                                                    child: Text('Okay.'))
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      } finally {
-                                        Navigator.of(context).pop();
-                                      }
-                                    }
-                                  } else {
-                                    final insProduct = Provider.of<Product>(context, listen: false);
-                                    insProduct.editProduct(formtitle, formdescription, formurl, formprice);
-                                  }
                                 }),
                                 child: const Icon(
                                   Icons.arrow_circle_right_sharp,
