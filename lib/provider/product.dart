@@ -24,8 +24,16 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleFavorite() {
+  Future<void> toggleFavorite() async {
+    final oldstatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
+    final urlProduct = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/products/$id.json');
+    try {
+      await http.patch(urlProduct, body: json.encode({'isfavorite': !isFavourite}));
+    } catch (error) {
+      isFavourite = oldstatus;
+      throw error;
+    }
   }
 }

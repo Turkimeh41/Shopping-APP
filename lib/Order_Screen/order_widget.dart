@@ -29,7 +29,7 @@ class _OrderWidgetState extends State<OrderWidget> {
                 Column(
                   children: [
                     Text(
-                      'TOTAL: \$${insOrder.amount}',
+                      'TOTAL: \$${insOrder.total}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(

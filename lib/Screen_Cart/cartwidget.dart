@@ -68,18 +68,22 @@ class CartWidget extends StatelessWidget {
                   ),
                 ),
               ),
+
+              //TITLE!!
               Container(
                   margin: const EdgeInsets.only(top: 10, left: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        cartitem.title,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: Text(
+                          cartitem.title,
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       SizedBox(
-                        width: 110,
-                        height: 45,
+                        width: 100,
                         child: Text(
                           product.description,
                           style: const TextStyle(

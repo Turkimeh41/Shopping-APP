@@ -47,9 +47,6 @@ class Products with ChangeNotifier {
               isFavourite: value['isfavorite']));
         });
       }
-
-      print(_products.length);
-      print(loadedProducts.length);
     } catch (error) {
       throw error;
     } finally {

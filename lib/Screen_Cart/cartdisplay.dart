@@ -6,8 +6,15 @@ import 'package:provider/provider.dart';
 import '../provider/cart.dart';
 import '../provider/orders.dart';
 
-class CartDisplay extends StatelessWidget {
+class CartDisplay extends StatefulWidget {
   const CartDisplay({super.key});
+
+  @override
+  State<CartDisplay> createState() => _CartDisplayState();
+}
+
+class _CartDisplayState extends State<CartDisplay> {
+  var anim = false;
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +88,32 @@ class CartDisplay extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  final insOrders = Provider.of<Orders>(context, listen: false);
-                  insOrders.addOrder(double.parse(cart.totalCart.toStringAsFixed(2)), cart.carts);
-                  cart.clearCart();
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.purple),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: Colors.purple)))),
-                child: Text("FINALIZE YOUR ORDER "),
+              SizedBox(
+                child: anim
+                    ? CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      )
+                    : ElevatedButton(
+                        onPressed: cart.carts.isEmpty
+                            ? null
+                            : () {
+                                final insOrders = Provider.of<Orders>(context, listen: false);
+                                setState(() {
+                                  anim = true;
+                                });
+                                insOrders.addOrder(double.parse(cart.totalCart.toStringAsFixed(2)), cart.carts).then((_) => {
+                                      setState(() {
+                                        anim = false;
+                                        cart.clearCart();
+                                      }),
+                                    });
+                              },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(Colors.purple),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: Colors.purple)))),
+                        child: Text("FINALIZE YOUR ORDER "),
+                      ),
               )
             ],
           )
