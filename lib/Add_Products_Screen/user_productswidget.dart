@@ -37,8 +37,7 @@ class UserProductWidget extends StatelessWidget {
                   SizedBox(width: MediaQuery.of(context).size.width * 0.06),
                   Container(
                     margin: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 0.7, color: Colors.black54), borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(border: Border.all(width: 0.7, color: Colors.black54), borderRadius: BorderRadius.circular(10)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
@@ -62,8 +61,7 @@ class UserProductWidget extends StatelessWidget {
                     child: IconButton(
                         onPressed: () {
                           showModalBottomSheet(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                             isScrollControlled: true,
                             context: context,
                             builder: (bCTX) {

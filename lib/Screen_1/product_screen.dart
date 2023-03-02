@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:module8/main.dart';
 import 'package:flutter/material.dart';
-import 'package:module8/Screen_1/badge.dart';
 import 'package:module8/Screen_1/app_drawer.dart';
 import './productdisplay.dart';
 import 'package:provider/provider.dart';

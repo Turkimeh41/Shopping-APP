@@ -105,7 +105,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
     return Container(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor, borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+          color: Theme.of(context).colorScheme.primary, borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       child: (loadingAnim == 1)

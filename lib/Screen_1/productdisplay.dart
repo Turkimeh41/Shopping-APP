@@ -14,7 +14,7 @@ class ProductDisplay extends StatelessWidget {
     final products = showfav ? instanceProducts.favproducts : instanceProducts.products;
     return Container(
       margin: const EdgeInsets.all(15),
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.primary
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1.4, crossAxisSpacing: 15, mainAxisSpacing: 15),
         itemBuilder: (context, i) {
