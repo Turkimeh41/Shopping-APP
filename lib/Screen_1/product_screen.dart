@@ -38,7 +38,8 @@ class _ProductScreenState extends State<ProductScreen> {
     setState(() {
       MyApp.started = !MyApp.started;
     });
-    final insProducts = await Provider.of<Products>(context, listen: false).fetchProductsAndSET();
+    final insProducts = await Provider.of<Products>(context, listen: false)
+        .fetchProductsAndSET();
     Timer(Duration(seconds: 1), () {
       setState(() {
         MyApp.started = !MyApp.started;
@@ -46,7 +47,13 @@ class _ProductScreenState extends State<ProductScreen> {
             content: RichText(
           text: TextSpan(
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              children: [TextSpan(text: 'Refreshed', style: TextStyle(color: Theme.of(context).colorScheme.primary)), TextSpan(text: ' !')]),
+              children: [
+                TextSpan(
+                    text: 'Refreshed',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary)),
+                TextSpan(text: ' !')
+              ]),
         )));
       });
     });
@@ -55,65 +62,65 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 10,
-        backgroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Text(
-          "Shopping Menu",
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          Consumer<Cart>(
-            builder: (context, cart, child) => b.Badge(
-                child: IconButton(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  icon: Icon(Icons.shopping_cart),
-                  onPressed: () => Navigator.of(context).pushNamed(CartScreen.routeName),
-                ),
-                value: cart.itemCount.toString(),
-                color: Colors.white),
+        appBar: AppBar(
+          elevation: 10,
+          backgroundColor: Theme.of(context).colorScheme.onBackground,
+          title: const Text(
+            "Shopping Menu",
+            style: TextStyle(color: Colors.white),
           ),
-          PopupMenuButton(
-            onSelected: (selected) {
-              setState(() {
-                if (selected == 0) {
-                  _showFav = true;
-                } else {
-                  _showFav = false;
-                }
-              });
-            },
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text(
-                  "only Favourites",
-                  style: TextStyle(color: Colors.black),
+          actions: [
+            Consumer<Cart>(
+              builder: (context, cart, child) => b.Badge(
+                  child: IconButton(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(CartScreen.routeName),
+                  ),
+                  value: cart.itemCount.toString(),
+                  color: Colors.white),
+            ),
+            PopupMenuButton(
+              onSelected: (selected) {
+                setState(() {
+                  if (selected == 0) {
+                    _showFav = true;
+                  } else {
+                    _showFav = false;
+                  }
+                });
+              },
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  child: Text(
+                    "only Favourites",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  value: 0,
                 ),
-                value: 0,
-              ),
-              PopupMenuItem(
-                child: Text(
-                  "Show All",
-                  style: TextStyle(color: Colors.black),
+                PopupMenuItem(
+                  child: Text(
+                    "Show All",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  value: 1,
                 ),
-                value: 1,
-              ),
-            ],
-            icon: Icon(Icons.more_vert),
-          )
-        ],
-        centerTitle: true,
-      ),
-      drawer: AppDrawer(),
-      body: RefreshIndicator(
+              ],
+              icon: Icon(Icons.more_vert),
+            )
+          ],
+          centerTitle: true,
+        ),
+        drawer: AppDrawer(),
+        body: RefreshIndicator(
           onRefresh: () => refresh(context),
-          child: MyApp.started
-              ? Container(
-                  alignment: Alignment.center,
-                  color: Theme.of(context).colorScheme.background,
-                  child: CircularProgressIndicator(),
-                )
-              : ProductDisplay(_showFav)),
-    );
+          child: Container(
+              alignment: Alignment.center,
+              color: Theme.of(context).colorScheme.background,
+              child: MyApp.started
+                  ? CircularProgressIndicator()
+                  : ProductDisplay(_showFav)),
+        ));
   }
 }

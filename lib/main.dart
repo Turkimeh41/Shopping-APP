@@ -36,11 +36,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: const ColorScheme(
             /*Light Color OF Icons*/ primary: Colors.amber,
-            /*Dark Color OF Icon/Buttons*/ secondary: Color.fromARGB(255, 126, 12, 111),
+            /*Dark Color OF Icon/Buttons*/ secondary:
+                Color.fromARGB(255, 126, 12, 111),
             onPrimary: Colors.white,
             onSecondary: Colors.amber,
-            /*BACKGROUND OF APP*/ background: Color.fromARGB(255, 241, 234, 228),
-            /*Appbar,Big Widgets etc*/ onBackground: Color.fromARGB(255, 126, 12, 111),
+            /*BACKGROUND OF APP*/ background:
+                Color.fromARGB(255, 241, 234, 228),
+            /*Appbar,Big Widgets etc*/ onBackground:
+                Color.fromARGB(255, 126, 12, 111),
             surface: Colors.white,
             onSurface: Color.fromARGB(255, 0, 0, 0),
             error: Color.fromARGB(255, 233, 56, 44),
@@ -50,7 +53,8 @@ class MyApp extends StatelessWidget {
         ),
         home: const ProductScreen(),
         routes: {
-          ProductDetailScreen.routeName: (context) => const ProductDetailScreen(),
+          ProductDetailScreen.routeName: (context) =>
+              const ProductDetailScreen(),
           CartScreen.routeName: (context) => const CartScreen(),
           OrderScreen.routeName: (context) => const OrderScreen(),
           UserProductScreen.routeName: (context) => const UserProductScreen()

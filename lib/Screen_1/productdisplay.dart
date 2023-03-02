@@ -11,11 +11,17 @@ class ProductDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     //Instance of PRODUCTS class, access the method .products to get copy of the list
     final instanceProducts = Provider.of<Products>(context);
-    final products = showfav ? instanceProducts.favproducts : instanceProducts.products;
+    final products =
+        showfav ? instanceProducts.favproducts : instanceProducts.products;
     return Container(
+      margin: const EdgeInsets.all(15),
       color: Theme.of(context).colorScheme.background,
       child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1.4, crossAxisSpacing: 15, mainAxisSpacing: 15),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1.4,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 15),
         itemBuilder: (context, i) {
           return ChangeNotifierProvider.value(
             value: products[i],
