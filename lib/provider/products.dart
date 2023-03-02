@@ -30,12 +30,13 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProductsAndSET() async {
+    final List<Product> loadedProducts = [];
     try {
       final response = await http.get(urlProducts);
       final extracted = json.decode(response.body);
-      final List<Product> loadedProducts = [];
-      if (extracted == Map<String, dynamic>) {
-        extracted as Map<String, dynamic>;
+      if (extracted == null) {
+      } else {
+        final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
           loadedProducts.add(Product(
               id: pID,
@@ -46,11 +47,14 @@ class Products with ChangeNotifier {
               isFavourite: value['isfavorite']));
         });
       }
-      _products = loadedProducts;
+
       print(_products.length);
-      notifyListeners();
+      print(loadedProducts.length);
     } catch (error) {
       throw error;
+    } finally {
+      _products = loadedProducts;
+      notifyListeners();
     }
   }
 
