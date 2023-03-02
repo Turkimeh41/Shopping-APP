@@ -47,9 +47,10 @@ class Products with ChangeNotifier {
         });
       }
       _products = loadedProducts;
+      print(_products.length);
       notifyListeners();
     } catch (error) {
-      rethrow;
+      throw error;
     }
   }
 

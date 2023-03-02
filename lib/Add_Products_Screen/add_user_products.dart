@@ -310,6 +310,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
                             margin: const EdgeInsets.only(top: 0),
                             child: ElevatedButton(
                                 style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.onSecondary),
                                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
                                   elevation: MaterialStateProperty.all(3),
                                 ),

@@ -15,6 +15,7 @@ class _OrderDisplayState extends State<OrderDisplay> {
   Widget build(BuildContext context) {
     final insOrders = Provider.of<Orders>(context);
     return Container(
+      color: Theme.of(context).colorScheme.background,
       margin: const EdgeInsets.all(5),
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(

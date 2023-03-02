@@ -8,9 +8,11 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).colorScheme.background,
       width: 250,
       child: Column(children: [
         AppBar(
+          backgroundColor: Theme.of(context).colorScheme.onBackground,
           title: const Text(
             'Hi User',
             style: TextStyle(color: Colors.white),
@@ -19,19 +21,35 @@ class AppDrawer extends StatelessWidget {
         ),
         const Divider(),
         ListTile(
+          shape:
+              RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).colorScheme.onBackground, width: 1.2), borderRadius: BorderRadius.circular(8)),
           onTap: () {
             Navigator.of(context).pushReplacementNamed(OrderScreen.routeName);
           },
-          leading: const Icon(Icons.payment),
-          title: const Text('Orders'),
+          leading: const Icon(
+            Icons.payment,
+            color: Colors.black,
+          ),
+          title: const Text(
+            'Orders',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         const Divider(),
         ListTile(
           onTap: () {
             Navigator.of(context).pushNamed(UserProductScreen.routeName);
           },
-          leading: const Icon(Icons.payment),
-          title: const Text('User\'s Added Products'),
+          shape:
+              RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).colorScheme.onBackground, width: 1.2), borderRadius: BorderRadius.circular(8)),
+          leading: const Icon(
+            Icons.payment,
+            color: Colors.black,
+          ),
+          title: const Text(
+            'User\'s Added Products',
+            style: TextStyle(color: Colors.black),
+          ),
         )
       ]),
     );

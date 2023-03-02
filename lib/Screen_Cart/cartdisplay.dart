@@ -15,7 +15,7 @@ class CartDisplay extends StatelessWidget {
       context,
     );
     return Container(
-      margin: const EdgeInsets.all(10),
+      color: Theme.of(context).colorScheme.background,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

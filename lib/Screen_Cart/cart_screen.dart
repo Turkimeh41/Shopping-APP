@@ -7,13 +7,12 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.onBackground,
           centerTitle: true,
           title: const Text(
             "MY CART",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           )),
       body: const CartDisplay(),
     );

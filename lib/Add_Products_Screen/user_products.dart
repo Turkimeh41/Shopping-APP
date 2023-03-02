@@ -55,6 +55,6 @@ class UserProductScreen extends StatelessWidget {
                     )),
               ))),
         ),
-        body: Container(color: Theme.of(context).colorScheme.primary, child: const UserProductDisplay()));
+        body: Container(color: Theme.of(context).colorScheme.background, child: const UserProductDisplay()));
   }
 }
