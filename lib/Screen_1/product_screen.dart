@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:module8/main.dart';
 import 'package:flutter/material.dart';
+import 'package:module8/Screen_1/badge.dart' as b;
 import 'package:module8/Screen_1/app_drawer.dart';
 import './productdisplay.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,7 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
           actions: [
             Consumer<Cart>(
-              builder: (context, cart, child) => Badge(
+              builder: (context, cart, child) => b.Badge(
                   child: IconButton(
                     color: Theme.of(context).iconTheme.color,
                     icon: Icon(Icons.shopping_cart),
@@ -105,7 +106,7 @@ class _ProductScreenState extends State<ProductScreen> {
         body: RefreshIndicator(
           onRefresh: () => refresh(context),
           child: Container(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.primary,
               child: MyApp.started
                   ? Center(
                       child: CircularProgressIndicator(),
