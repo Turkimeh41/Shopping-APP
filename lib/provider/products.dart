@@ -57,7 +57,7 @@ class Products with ChangeNotifier {
               description: value['description'],
               imageURL: value['imageUrl'],
               price: value['price'],
-              isFavourite: favoriteData[pID]));
+              isFavourite: favoriteData == null ? false : favoriteData[pID]));
         });
       }
     } catch (error) {
