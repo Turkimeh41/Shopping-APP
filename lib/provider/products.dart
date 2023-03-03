@@ -5,9 +5,11 @@ import 'package:http/http.dart' as http;
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final urlProducts = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/products.json');
+  final String token;
 
   List<Product> _products = [];
+
+  Products(this.token, this._products);
 
   List<Product> get products {
     return [..._products];
@@ -18,18 +20,19 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct({required title, required description, required imageURL, required price, favorite = false}) async {
+    final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
     try {
-      final response = await http.post(urlProducts,
-          body: json.encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite}));
-      _products.add(
-          Product(id: json.decode(response.body)['name'], title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
+      final response = await http.post(urlProducts, body: json.encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite}));
+      _products.add(Product(id: json.decode(response.body)['name'], title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
       notifyListeners();
     } catch (error) {
+      print(error);
       rethrow;
     }
   }
 
   Future<void> fetchProductsAndSET() async {
+    final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
     final List<Product> loadedProducts = [];
     try {
       final response = await http.get(urlProducts);
@@ -38,13 +41,8 @@ class Products with ChangeNotifier {
       } else {
         final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
-          loadedProducts.add(Product(
-              id: pID,
-              title: value['title'],
-              description: value['description'],
-              imageURL: value['imageUrl'],
-              price: value['price'],
-              isFavourite: value['isfavorite']));
+          loadedProducts.add(
+              Product(id: pID, title: value['title'], description: value['description'], imageURL: value['imageUrl'], price: value['price'], isFavourite: value['isfavorite']));
         });
       }
     } catch (error) {
@@ -62,7 +60,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> removeProduct(String id) async {
-    final urlProduct = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/products/$id.json');
+    final urlProduct = Uri.https('new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app', '/products/$id.json');
     for (int i = 0; i < _products.length; i++) {
       if (id == _products[i].id) {
         try {

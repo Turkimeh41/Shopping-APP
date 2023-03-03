@@ -12,26 +12,25 @@ class OrderItem with ChangeNotifier {
   OrderItem({this.id = '', required this.total, required this.products, required this.time});
 }
 
-final urlOrders = Uri.https('flutter-7dhc-default-rtdb.europe-west1.firebasedatabase.app', '/orders.json');
-
 class Orders with ChangeNotifier {
+  final String token;
   List<OrderItem> _orders = [];
+
+  Orders(this.token, this._orders);
 
   List<OrderItem> get getOrders {
     return [..._orders];
   }
 
   Future<void> addOrder(double amount, List<CartItem> products) async {
+    final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders.json?auth=$token');
     final order = OrderItem(total: amount, products: products, time: DateTime.now());
-
     try {
       final response = await http.post(urlOrders,
           body: json.encode({
             'total': order.total,
             'time': (order.time.toIso8601String()),
-            'products': products
-                .map((current) => {'id': current.id, 'title': current.title, 'quantity': current.quantity, 'price': current.price, 'pId': current.pId})
-                .toList()
+            'products': products.map((current) => {'id': current.id, 'title': current.title, 'quantity': current.quantity, 'price': current.price, 'pId': current.pId}).toList()
           }));
       _orders.insert(0, order);
       notifyListeners();
@@ -41,6 +40,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchOrders() async {
+    final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders.json?auth=$token');
+
     final List<OrderItem> loadedOrders = [];
     try {
       final response = await http.get(urlOrders);

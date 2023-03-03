@@ -38,8 +38,7 @@ class _ProductScreenState extends State<ProductScreen> {
     setState(() {
       MyApp.started = !MyApp.started;
     });
-    final insProducts = await Provider.of<Products>(context, listen: false)
-        .fetchProductsAndSET();
+    final insProducts = await Provider.of<Products>(context, listen: false).fetchProductsAndSET();
     Timer(Duration(seconds: 1), () {
       setState(() {
         MyApp.started = !MyApp.started;
@@ -47,13 +46,7 @@ class _ProductScreenState extends State<ProductScreen> {
             content: RichText(
           text: TextSpan(
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                    text: 'Refreshed',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary)),
-                TextSpan(text: ' !')
-              ]),
+              children: [TextSpan(text: 'Refreshed', style: TextStyle(color: Theme.of(context).colorScheme.primary)), TextSpan(text: ' !')]),
         )));
       });
     });
@@ -75,8 +68,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   child: IconButton(
                     color: Theme.of(context).colorScheme.onPrimary,
                     icon: Icon(Icons.shopping_cart),
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(CartScreen.routeName),
+                    onPressed: () => Navigator.of(context).pushNamed(CartScreen.routeName),
                   ),
                   value: cart.itemCount.toString(),
                   color: Colors.white),
@@ -116,11 +108,7 @@ class _ProductScreenState extends State<ProductScreen> {
         body: RefreshIndicator(
           onRefresh: () => refresh(context),
           child: Container(
-              alignment: Alignment.center,
-              color: Theme.of(context).colorScheme.background,
-              child: MyApp.started
-                  ? CircularProgressIndicator()
-                  : ProductDisplay(_showFav)),
+              alignment: Alignment.center, color: Theme.of(context).colorScheme.background, child: MyApp.started ? CircularProgressIndicator() : ProductDisplay(_showFav)),
         ));
   }
 }
