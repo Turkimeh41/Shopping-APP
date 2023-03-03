@@ -24,11 +24,11 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavorite(String token) async {
+  Future<void> toggleFavorite(String token, String currentUserID) async {
     final oldstatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
-    final urlProduct = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/userfavorites/$uid/$id.json?auth=$token');
+    final urlProduct = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/userfavorites/$currentUserID/$id.json?auth=$token');
     try {
       await http.put(urlProduct, body: json.encode(isFavourite));
     } catch (error) {

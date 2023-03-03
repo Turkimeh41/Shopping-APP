@@ -39,7 +39,7 @@ class ProductWidget extends StatelessWidget {
                     icon: Icon(product.isFavourite ? Icons.favorite : Icons.favorite_border_rounded, size: 30),
                     color: product.isFavourite ? Colors.red : Colors.white,
                     onPressed: () {
-                      product.toggleFavorite(auth.token);
+                      product.toggleFavorite(auth.token, auth.userID);
                     },
                   )),
               Positioned(
