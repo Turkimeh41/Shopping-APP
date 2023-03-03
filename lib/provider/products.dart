@@ -8,7 +8,7 @@ class Products with ChangeNotifier {
   final String token;
   final String uID;
   List<Product> _products = [];
-
+  List<Product> _uProducts = [];
   Products(this.token, this.uID, this._products);
 
   List<Product> get products {
@@ -20,7 +20,8 @@ class Products with ChangeNotifier {
   }
 
   List<Product> get userproducts {
-    return _products.where((product) => product.uid == uID).toList();
+    _uProducts = _products.where((product) => product.uid == uID).toList();
+    return [..._uProducts];
   }
 
   Future<void> addProduct({required, required title, required description, required imageURL, required price, favorite = false}) async {
@@ -46,7 +47,13 @@ class Products with ChangeNotifier {
         final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
           loadedProducts.add(Product(
-              id: pID, uid: uID, title: value['title'], description: value['description'], imageURL: value['imageUrl'], price: value['price'], isFavourite: value['isfavorite']));
+              id: pID,
+              uid: value['uid'],
+              title: value['title'],
+              description: value['description'],
+              imageURL: value['imageUrl'],
+              price: value['price'],
+              isFavourite: value['isfavorite']));
         });
       }
     } catch (error) {
