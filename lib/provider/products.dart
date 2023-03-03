@@ -6,10 +6,10 @@ import 'product.dart';
 
 class Products with ChangeNotifier {
   final String token;
-  final String uID;
+  final String currentUserID;
   List<Product> _products = [];
   List<Product> _uProducts = [];
-  Products(this.token, this.uID, this._products);
+  Products(this.token, this.currentUserID, this._products);
 
   List<Product> get products {
     return [..._products];
@@ -20,16 +20,16 @@ class Products with ChangeNotifier {
   }
 
   List<Product> get userproducts {
-    _uProducts = _products.where((product) => product.uid == uID).toList();
+    _uProducts = _products.where((product) => product.uid == currentUserID).toList();
     return [..._uProducts];
   }
 
   Future<void> addProduct({required, required title, required description, required imageURL, required price, favorite = false}) async {
     final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
     try {
-      final response =
-          await http.post(urlProducts, body: json.encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite, 'uid': uID}));
-      _products.add(Product(id: json.decode(response.body)['name'], uid: uID, title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
+      final response = await http.post(urlProducts, body: json.encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'uid': currentUserID}));
+      _products.add(
+          Product(id: json.decode(response.body)['name'], uid: currentUserID, title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -37,13 +37,17 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProductsAndSET() async {
-    final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
     final List<Product> loadedProducts = [];
     try {
+      final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
       final response = await http.get(urlProducts);
       final extracted = json.decode(response.body);
       if (extracted == null) {
       } else {
+        final urlUserFav = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/userfavorites/$currentUserID.json?auth=$token');
+        final favoriteresponse = await http.get(urlUserFav);
+        final favoriteData = json.decode(favoriteresponse.body);
+
         final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
           loadedProducts.add(Product(
@@ -53,7 +57,7 @@ class Products with ChangeNotifier {
               description: value['description'],
               imageURL: value['imageUrl'],
               price: value['price'],
-              isFavourite: value['isfavorite']));
+              isFavourite: favoriteData[pID]));
         });
       }
     } catch (error) {
