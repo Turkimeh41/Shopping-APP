@@ -10,7 +10,6 @@ import './provider/cart.dart';
 import 'Screen_Cart/cart_screen.dart';
 import 'Add_Products_Screen/user_products.dart';
 import 'provider/user.dart';
-import 'package:module8/provider/user.dart';
 
 void main() {
   runApp(const MyApp());

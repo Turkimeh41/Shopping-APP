@@ -5,6 +5,7 @@ import '../provider/product.dart';
 import '../provider/products.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:module8/provider/user.dart';
 
 class AddEditUserProducts extends StatefulWidget {
   const AddEditUserProducts({this.id = '', this.title = '', this.price = 0, this.description = '', this.imageURL = '', required this.provider, super.key});
@@ -70,7 +71,8 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
         });
       } else {
         final insProduct = Provider.of<Product>(context, listen: false);
-        await insProduct.editProduct(formid, formtitle, formdescription, formurl, formprice);
+        final insAuth = Provider.of<User>(context, listen: false);
+        await insProduct.editProduct(formid, formtitle, formdescription, formurl, formprice, insAuth.token);
         Timer(const Duration(seconds: 2), () {
           setState(() {
             loadingAnim = 2;
@@ -104,8 +106,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface, borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       child: (loadingAnim == 1)
@@ -114,8 +115,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
               children: [
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.12,
-                  child: Lottie.asset('animations/112180-paper-notebook.json',
-                      width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5),
+                  child: Lottie.asset('animations/112180-paper-notebook.json', width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5),
                 ),
                 Positioned(
                   bottom: MediaQuery.of(context).size.height * 0.2,
@@ -129,9 +129,7 @@ class _AddUserProductsState extends State<AddEditUserProducts> {
           : (loadingAnim == 2)
               ? Stack(
                   alignment: Alignment.center,
-                  children: [
-                    Lottie.asset('animations/50465-done.json', width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5)
-                  ],
+                  children: [Lottie.asset('animations/50465-done.json', width: MediaQuery.of(context).size.width * 0.5, height: MediaQuery.of(context).size.height * 0.5)],
                 )
               : Form(
                   key: form,

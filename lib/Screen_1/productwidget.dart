@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../Screen_2/productdetails_screen.dart';
 import '../provider/product.dart';
 import '../provider/cart.dart';
+import 'package:module8/provider/user.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({super.key});
@@ -10,6 +11,7 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
+    final auth = Provider.of<User>(context, listen: false);
     final product = Provider.of<Product>(context);
     return Container(
       foregroundDecoration: BoxDecoration(
@@ -37,7 +39,7 @@ class ProductWidget extends StatelessWidget {
                     icon: Icon(product.isFavourite ? Icons.favorite : Icons.favorite_border_rounded, size: 30),
                     color: product.isFavourite ? Colors.red : Colors.white,
                     onPressed: () {
-                      product.toggleFavorite();
+                      product.toggleFavorite(auth.token);
                     },
                   )),
               Positioned(
@@ -68,7 +70,7 @@ class ProductWidget extends StatelessWidget {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
-                        '${product.title} Added item to cart!',
+                        '${product.title} Added to cart!',
                       ),
                       duration: const Duration(seconds: 3),
                       action: SnackBarAction(

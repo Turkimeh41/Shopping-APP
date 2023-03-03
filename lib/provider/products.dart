@@ -6,7 +6,6 @@ import 'product.dart';
 
 class Products with ChangeNotifier {
   final String token;
-
   List<Product> _products = [];
 
   Products(this.token, this._products);
@@ -26,7 +25,6 @@ class Products with ChangeNotifier {
       _products.add(Product(id: json.decode(response.body)['name'], title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
       notifyListeners();
     } catch (error) {
-      print(error);
       rethrow;
     }
   }
@@ -46,7 +44,7 @@ class Products with ChangeNotifier {
         });
       }
     } catch (error) {
-      throw error;
+      rethrow;
     } finally {
       _products = loadedProducts;
       notifyListeners();
@@ -60,7 +58,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> removeProduct(String id) async {
-    final urlProduct = Uri.https('new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app', '/products/$id.json');
+    final urlProduct = Uri.parse('new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json?auth=$token');
     for (int i = 0; i < _products.length; i++) {
       if (id == _products[i].id) {
         try {

@@ -1,7 +1,8 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:module8/Screen_1/product_screen.dart';
 import 'package:module8/model/http_exception.dart';
 import 'package:module8/provider/user.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +17,7 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
-    // transformConfig.translate(-10.0);
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           Container(
@@ -51,7 +49,7 @@ class AuthScreen extends StatelessWidget {
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color.fromARGB(255, 94, 6, 89),
+                        color: const Color.fromARGB(255, 94, 6, 89),
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 8,
@@ -105,26 +103,26 @@ class _AuthCardState extends State<_AuthCard> {
   void errorHandler(String error, BuildContext ctx) {
     if (error == 'EMAIL_EXISTS') {
       ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
           content: Text(
             'INVALID, an Email is already associated with another user',
             style: TextStyle(color: Theme.of(context).colorScheme.onError),
           )));
     } else if (error == 'TOO_MANY_ATTEMPTS_TRY_LATER') {
       ScaffoldMessenger.of(ctx).showSnackBar(
-          SnackBar(duration: Duration(seconds: 2), content: Text('Too many attempts, try again in later', style: TextStyle(color: Theme.of(context).colorScheme.error))));
+          SnackBar(duration: const Duration(seconds: 2), content: Text('Too many attempts, try again in later', style: TextStyle(color: Theme.of(context).colorScheme.error))));
     } else if (error == 'EMAIL_NOT_FOUND') {
       ScaffoldMessenger.of(ctx)
-          .showSnackBar(SnackBar(duration: Duration(seconds: 2), content: Text('INVALID, Email not Found', style: TextStyle(color: Theme.of(context).colorScheme.error))));
+          .showSnackBar(SnackBar(duration: const Duration(seconds: 2), content: Text('INVALID, Email not Found', style: TextStyle(color: Theme.of(context).colorScheme.error))));
     } else if (error == 'INVALID_PASSWORD') {
       ScaffoldMessenger.of(ctx)
-          .showSnackBar(SnackBar(duration: Duration(seconds: 2), content: Text('INVAlID, wrong Password.', style: TextStyle(color: Theme.of(context).colorScheme.error))));
+          .showSnackBar(SnackBar(duration: const Duration(seconds: 2), content: Text('INVAlID, wrong Password.', style: TextStyle(color: Theme.of(context).colorScheme.error))));
     } else if (error == 'USER_DISABLED') {
-      ScaffoldMessenger.of(ctx)
-          .showSnackBar(SnackBar(duration: Duration(seconds: 2), content: Text('INVALID, THE User has been banned', style: TextStyle(color: Theme.of(context).colorScheme.error))));
+      ScaffoldMessenger.of(ctx).showSnackBar(
+          SnackBar(duration: const Duration(seconds: 2), content: Text('INVALID, THE User has been banned', style: TextStyle(color: Theme.of(context).colorScheme.error))));
     } else {
       ScaffoldMessenger.of(ctx)
-          .showSnackBar(SnackBar(duration: Duration(seconds: 2), content: Text('INVALID, Undefined Error', style: TextStyle(color: Theme.of(context).colorScheme.error))));
+          .showSnackBar(SnackBar(duration: const Duration(seconds: 2), content: Text('INVALID, Undefined Error', style: TextStyle(color: Theme.of(context).colorScheme.error))));
     }
   }
 

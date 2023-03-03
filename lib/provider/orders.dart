@@ -26,7 +26,7 @@ class Orders with ChangeNotifier {
     final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders.json?auth=$token');
     final order = OrderItem(total: amount, products: products, time: DateTime.now());
     try {
-      final response = await http.post(urlOrders,
+      await http.post(urlOrders,
           body: json.encode({
             'total': order.total,
             'time': (order.time.toIso8601String()),
@@ -35,7 +35,7 @@ class Orders with ChangeNotifier {
       _orders.insert(0, order);
       notifyListeners();
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -61,7 +61,7 @@ class Orders with ChangeNotifier {
         });
       }
     } catch (error) {
-      throw error;
+      rethrow;
     } finally {
       _orders = loadedOrders;
       notifyListeners();
