@@ -47,7 +47,10 @@ class Products with ChangeNotifier {
         final urlUserFav = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/userfavorites/$currentUserID.json?auth=$token');
         final favoriteresponse = await http.get(urlUserFav);
         final favoriteData = json.decode(favoriteresponse.body);
-
+        bool favcondition = false;
+        if (favoriteData == null) {
+          favcondition = true;
+        }
         final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
           loadedProducts.add(Product(
@@ -57,14 +60,14 @@ class Products with ChangeNotifier {
               description: value['description'],
               imageURL: value['imageUrl'],
               price: value['price'],
-              isFavourite: favoriteData == null ? false : favoriteData[pID]));
+              //  FIRST CHECK IF THE WHOLE FIELD (A NEW USER HASN'T FAVORITED ANYTHING) SECOND CHECK FOR EACH FIELD IF IT'S NULL, THE DOUBLE ?? IS CHECKING IF THE FIELD IS NULL = FALSE IF NOT PUT FAVORITEDATA[pID]
+              isFavourite: favoriteData == null ? false : favoriteData[pID] ?? false));
+          _products = loadedProducts;
+          notifyListeners();
         });
       }
     } catch (error) {
       rethrow;
-    } finally {
-      _products = loadedProducts;
-      notifyListeners();
     }
   }
 
