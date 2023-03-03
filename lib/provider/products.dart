@@ -6,9 +6,10 @@ import 'product.dart';
 
 class Products with ChangeNotifier {
   final String token;
+  final String uID;
   List<Product> _products = [];
 
-  Products(this.token, this._products);
+  Products(this.token, this.uID, this._products);
 
   List<Product> get products {
     return [..._products];
@@ -18,11 +19,16 @@ class Products with ChangeNotifier {
     return _products.where((product) => product.isFavourite == true).toList();
   }
 
-  Future<void> addProduct({required title, required description, required imageURL, required price, favorite = false}) async {
+  List<Product> get userproducts {
+    return _products.where((product) => product.uid == uID).toList();
+  }
+
+  Future<void> addProduct({required, required title, required description, required imageURL, required price, favorite = false}) async {
     final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
     try {
-      final response = await http.post(urlProducts, body: json.encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite}));
-      _products.add(Product(id: json.decode(response.body)['name'], title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
+      final response =
+          await http.post(urlProducts, body: json.encode({'title': title, 'description': description, 'imageUrl': imageURL, 'price': price, 'isfavorite': favorite, 'uid': uID}));
+      _products.add(Product(id: json.decode(response.body)['name'], uid: uID, title: title, description: description, imageURL: imageURL, price: price, isFavourite: favorite));
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -39,8 +45,8 @@ class Products with ChangeNotifier {
       } else {
         final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
-          loadedProducts.add(
-              Product(id: pID, title: value['title'], description: value['description'], imageURL: value['imageUrl'], price: value['price'], isFavourite: value['isfavorite']));
+          loadedProducts.add(Product(
+              id: pID, uid: uID, title: value['title'], description: value['description'], imageURL: value['imageUrl'], price: value['price'], isFavourite: value['isfavorite']));
         });
       }
     } catch (error) {

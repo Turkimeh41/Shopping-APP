@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Product with ChangeNotifier {
+  String uid;
   String id;
   String title;
   String description;
   String imageURL;
   double price;
   bool isFavourite;
-  Product({required this.id, required this.title, required this.description, required this.imageURL, required this.price, this.isFavourite = false});
+  Product({required this.uid, required this.id, required this.title, required this.description, required this.imageURL, required this.price, this.isFavourite = false});
 
   Future<void> editProduct(String id, String title, String description, String imageURL, double price, String token) async {
     this.id = id;

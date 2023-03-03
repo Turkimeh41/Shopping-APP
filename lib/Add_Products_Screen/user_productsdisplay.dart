@@ -60,7 +60,7 @@ class UserProductDisplay extends StatelessWidget {
                 child: ListView.separated(
                     itemBuilder: (context, index) {
                       return ChangeNotifierProvider.value(
-                        value: insProducts.products[index],
+                        value: insProducts.userproducts[index],
                         child: const UserProductWidget(),
                       );
                     },
@@ -69,7 +69,7 @@ class UserProductDisplay extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.001,
                       );
                     },
-                    itemCount: insProducts.products.length),
+                    itemCount: insProducts.userproducts.length),
               ),
             ),
           ),
