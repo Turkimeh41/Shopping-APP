@@ -28,9 +28,9 @@ class Product with ChangeNotifier {
     final oldstatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
-    final urlProduct = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json?auth=$token');
+    final urlProduct = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/userfavorites/$uid/$id.json?auth=$token');
     try {
-      await http.patch(urlProduct, body: json.encode({'isfavorite': isFavourite}));
+      await http.put(urlProduct, body: json.encode(isFavourite));
     } catch (error) {
       isFavourite = oldstatus;
       notifyListeners();
