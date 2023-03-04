@@ -15,7 +15,7 @@ class _OrderDisplayState extends State<OrderDisplay> {
   var anim = true;
   @override
   void initState() {
-    Future.delayed(Duration.zero).then((_) {
+    Future.delayed(const Duration(seconds: 1)).then((_) {
       final insOrders = Provider.of<Orders>(context, listen: false);
       insOrders.fetchOrders();
       setState(() {
@@ -30,10 +30,13 @@ class _OrderDisplayState extends State<OrderDisplay> {
     final insOrders = Provider.of<Orders>(context);
     return Container(
       color: Theme.of(context).colorScheme.background,
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(8),
       height: MediaQuery.of(context).size.height,
       child: anim
-          ? Lottie.asset('112180-paper-notebook.json')
+          ? Container(
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(),
+            )
           : ListView.builder(
               itemCount: insOrders.getOrders.length,
               itemBuilder: (context, index) {

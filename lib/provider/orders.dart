@@ -14,16 +14,17 @@ class OrderItem with ChangeNotifier {
 
 class Orders with ChangeNotifier {
   final String token;
+  final String userID;
   List<OrderItem> _orders = [];
 
-  Orders(this.token, this._orders);
+  Orders(this.token, this.userID, this._orders);
 
   List<OrderItem> get getOrders {
     return [..._orders];
   }
 
   Future<void> addOrder(double amount, List<CartItem> products) async {
-    final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders.json?auth=$token');
+    final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders/$userID.json?auth=$token');
     final order = OrderItem(total: amount, products: products, time: DateTime.now());
     try {
       await http.post(urlOrders,
@@ -40,7 +41,7 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchOrders() async {
-    final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders.json?auth=$token');
+    final urlOrders = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/orders/$userID.json?auth=$token');
 
     final List<OrderItem> loadedOrders = [];
     try {

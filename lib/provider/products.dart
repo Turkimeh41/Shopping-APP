@@ -8,7 +8,6 @@ class Products with ChangeNotifier {
   final String token;
   final String currentUserID;
   List<Product> _products = [];
-  List<Product> _uProducts = [];
   Products(this.token, this.currentUserID, this._products);
 
   List<Product> get products {
@@ -17,11 +16,6 @@ class Products with ChangeNotifier {
 
   List<Product> get favproducts {
     return _products.where((product) => product.isFavourite == true).toList();
-  }
-
-  List<Product> get userproducts {
-    _uProducts = _products.where((product) => product.uid == currentUserID).toList();
-    return [..._uProducts];
   }
 
   Future<void> addProduct({required, required title, required description, required imageURL, required price, favorite = false}) async {
@@ -36,10 +30,13 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<void> fetchProductsAndSET() async {
+  Future<void> fetchProductsAndSET(bool filterbyUser) async {
     final List<Product> loadedProducts = [];
+    final urlUNFILTERED = 'https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token';
+    final urlFILTERED = 'https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token&orderBy="uid"&equalTo="$currentUserID"';
     try {
-      final urlProducts = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$token');
+      final urlProducts = filterbyUser ? Uri.parse(urlFILTERED) : Uri.parse(urlUNFILTERED);
+
       final response = await http.get(urlProducts);
       final extracted = json.decode(response.body);
       if (extracted == null) {
@@ -47,10 +44,6 @@ class Products with ChangeNotifier {
         final urlUserFav = Uri.parse('https://new-project-ebe4a-default-rtdb.europe-west1.firebasedatabase.app/userfavorites/$currentUserID.json?auth=$token');
         final favoriteresponse = await http.get(urlUserFav);
         final favoriteData = json.decode(favoriteresponse.body);
-        bool favcondition = false;
-        if (favoriteData == null) {
-          favcondition = true;
-        }
         final extracted = json.decode(response.body) as Map<String, dynamic>;
         extracted.forEach((pID, value) {
           loadedProducts.add(Product(

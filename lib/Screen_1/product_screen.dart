@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, unused_local_variable
 import 'dart:async';
-
-import 'package:module8/main.dart';
 import 'package:flutter/material.dart';
+import 'package:module8/provider/user.dart';
 import 'package:module8/Screen_1/badge.dart' as b;
 import 'package:module8/Screen_1/app_drawer.dart';
 import './productdisplay.dart';
@@ -20,35 +19,12 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   bool _showFav = false;
-  @override
-  void didChangeDependencies() {
-    if (MyApp.started) {
-      Timer(Duration(seconds: 1), () {
-        final insProducts = Provider.of<Products>(context, listen: false);
-        insProducts.fetchProductsAndSET().then((_) {
-          setState(() {});
-        });
-        MyApp.started = !MyApp.started;
-      });
-    }
-    super.didChangeDependencies();
-  }
+  bool anim = true;
 
   Future<void> refresh(BuildContext context) async {
+    await Provider.of<Products>(context, listen: false).fetchProductsAndSET(false);
     setState(() {
-      MyApp.started = !MyApp.started;
-    });
-    final insProducts = await Provider.of<Products>(context, listen: false).fetchProductsAndSET();
-    Timer(Duration(seconds: 1), () {
-      setState(() {
-        MyApp.started = !MyApp.started;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: RichText(
-          text: TextSpan(
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              children: [TextSpan(text: 'Refreshed', style: TextStyle(color: Theme.of(context).colorScheme.primary)), TextSpan(text: ' !')]),
-        )));
-      });
+      anim = false;
     });
   }
 
@@ -78,10 +54,18 @@ class _ProductScreenState extends State<ProductScreen> {
                 setState(() {
                   if (selected == 0) {
                     _showFav = true;
-                  } else {
+                  } else if (selected == 1) {
                     _showFav = false;
                   }
                 });
+                if (selected == 2) {
+                  Provider.of<User>(context, listen: false).logout();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                    'Logged out',
+                    textAlign: TextAlign.center,
+                  )));
+                }
               },
               itemBuilder: (_) => [
                 PopupMenuItem(
@@ -98,6 +82,13 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   value: 1,
                 ),
+                PopupMenuItem(
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  value: 2,
+                ),
               ],
               icon: Icon(Icons.more_vert),
             )
@@ -105,10 +96,12 @@ class _ProductScreenState extends State<ProductScreen> {
           centerTitle: true,
         ),
         drawer: AppDrawer(),
-        body: RefreshIndicator(
-          onRefresh: () => refresh(context),
-          child: Container(
-              alignment: Alignment.center, color: Theme.of(context).colorScheme.background, child: MyApp.started ? CircularProgressIndicator() : ProductDisplay(_showFav)),
+        body: FutureBuilder(
+          future: refresh(context),
+          builder: (context, snapshot) => RefreshIndicator(
+            onRefresh: () => refresh(context),
+            child: Container(alignment: Alignment.center, color: Theme.of(context).colorScheme.background, child: ProductDisplay(_showFav)),
+          ),
         ));
   }
 }

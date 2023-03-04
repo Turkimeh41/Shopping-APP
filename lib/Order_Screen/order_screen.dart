@@ -18,7 +18,7 @@ class OrderScreen extends StatelessWidget {
         title: const Text('Your Orders'),
         centerTitle: true,
       ),
-      body: const OrderDisplay(),
+      body: Container(color: Theme.of(context).colorScheme.background, child: const OrderDisplay()),
     );
   }
 }

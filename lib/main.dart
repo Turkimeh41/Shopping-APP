@@ -3,6 +3,7 @@ import 'package:module8/Order_Screen/order_screen.dart';
 import 'package:module8/Screen_0/auth_screen.dart';
 import 'package:module8/Screen_1/product_screen.dart';
 import 'package:module8/provider/orders.dart';
+import 'package:module8/splash_screen.dart';
 import './Screen_2/productdetails_screen.dart';
 import './provider/products.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static bool started = true;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
             create: (context) => Cart(),
           ),
           ChangeNotifierProxyProvider<User, Orders>(
-            update: (context, auth, previous) => Orders(auth.token, previous == null ? [] : previous.getOrders),
-            create: (context) => Orders('', []),
+            update: (context, auth, previous) => Orders(auth.token, auth.userID, previous == null ? [] : previous.getOrders),
+            create: (context) => Orders('', '', []),
           )
         ],
         child: Consumer<User>(
@@ -56,7 +56,11 @@ class MyApp extends StatelessWidget {
                       brightness: Brightness.light,
                     ),
                   ),
-                  home: insAuth.isAuth ? const ProductScreen() : const AuthScreen(),
+                  home: insAuth.isAuth
+                      ? const ProductScreen()
+                      : FutureBuilder(
+                          future: insAuth.tryAutoLogin(),
+                          builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting ? const SplashScreen() : const AuthScreen()),
                   routes: {
                     ProductDetailScreen.routeName: (context) => const ProductDetailScreen(),
                     CartScreen.routeName: (context) => const CartScreen(),

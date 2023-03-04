@@ -28,9 +28,13 @@ class ProductWidget extends StatelessWidget {
               child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.network(
-                product.imageURL,
-                fit: BoxFit.cover,
+              Hero(
+                tag: product.id,
+                child: FadeInImage(
+                  placeholder: const AssetImage('imgs/product-placeholder.png'),
+                  image: NetworkImage(product.imageURL),
+                  fit: BoxFit.cover,
+                ),
               ),
               Positioned(
                   top: -7,

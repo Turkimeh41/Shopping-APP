@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:module8/Add_Products_Screen/user_productswidget.dart';
 import 'package:provider/provider.dart';
 import '../provider/products.dart';
 
 class UserProductDisplay extends StatelessWidget {
   const UserProductDisplay({super.key});
+  Future<void> refresh(BuildContext context) async {
+    await Provider.of<Products>(context, listen: false).fetchProductsAndSET(true);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final insProducts = Provider.of<Products>(context);
+    final insProducts = Provider.of<Products>(context, listen: false);
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -53,23 +57,31 @@ class UserProductDisplay extends StatelessWidget {
             ),
           ]),
           Expanded(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: CupertinoScrollbar(
-                thickness: 4,
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return ChangeNotifierProvider.value(
-                        value: insProducts.userproducts[index],
-                        child: const UserProductWidget(),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.001,
-                      );
-                    },
-                    itemCount: insProducts.userproducts.length),
+            child: FutureBuilder(
+              future: refresh(context),
+              builder: (ctx, snapshot) => RefreshIndicator(
+                onRefresh: () {
+                  return refresh(context);
+                },
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: CupertinoScrollbar(
+                    thickness: 4,
+                    child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                            value: insProducts.products[index],
+                            child: const UserProductWidget(),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.001,
+                          );
+                        },
+                        itemCount: insProducts.products.length),
+                  ),
+                ),
               ),
             ),
           ),
